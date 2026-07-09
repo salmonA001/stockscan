@@ -1,0 +1,14 @@
+# Python
+python/__pycache__/
+python/*.pyc
+python/.venv/
+python/venv/
+*.egg-info/
+
+# Node (only needed if you run the optional local smoke test)
+web/node_modules/
+web/package-lock.json
+
+# OS/editor cruft
+.DS_Store
+.vscode/
