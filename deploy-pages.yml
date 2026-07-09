@@ -1,0 +1,41 @@
+name: Deploy web dashboard to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # The web app is plain HTML/CSS/JS with no build step, so we just
+      # publish the web/ folder as-is (minus node_modules / test files).
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          rsync -av --exclude 'node_modules' --exclude 'test_dom.js' --exclude 'package.json' web/ _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

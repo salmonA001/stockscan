@@ -1,0 +1,14 @@
+{
+  "name": "signal-stock-screener-web",
+  "version": "1.0.0",
+  "description": "AI stock screener dashboard \u2014 static site, no build step. Serve with any static file server.",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve .",
+    "test": "node test_dom.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  },
+  "license": "MIT"
+}
